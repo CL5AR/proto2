@@ -74,6 +74,9 @@
       <div class="input-section">
   <textarea id="userMessage" rows="3" placeholder="Write your check-in here..." style="width: 100%; padding: 0.5rem;"></textarea>
   <button onclick="submitMessage()" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">Send</button>
+        <div style="margin-top: 1rem;">
+  <button onclick="clearConversation()">Clear</button>
+  <button onclick="downloadConversation()">Download</button>
 </div>
       
       <p><strong>AI:</strong> Hi, I'm here to support your clarity today. Want to check in?</p>
@@ -146,6 +149,66 @@
     }
   }
 </script>
+
+  <script>
+  const conversationLog = [];
+
+  function updateChatDisplay() {
+    const chatBox = document.querySelector(".chat-box");
+    chatBox.innerHTML = "";
+    conversationLog.forEach(msg => {
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${msg.role}:</strong> ${msg.content}`;
+      chatBox.appendChild(p);
+    });
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function sendCheckInMessage(message) {
+    conversationLog.push({ role: "You", content: message });
+    updateChatDisplay();
+
+    const response = await fetch("https://1c6e183e-4f48-4860-be37-3d639cd8b460-00-6gazeugf5dpv.janeway.replit.dev/checkin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    if (data.response) {
+      conversationLog.push({ role: "AI", content: data.response });
+    } else {
+      conversationLog.push({ role: "AI", content: "Hmm... something went wrong." });
+    }
+    updateChatDisplay();
+  }
+
+  function submitMessage() {
+    const input = document.getElementById("userMessage");
+    const message = input.value.trim();
+    if (message) {
+      sendCheckInMessage(message);
+      input.value = "";
+    }
+  }
+
+  function clearConversation() {
+    conversationLog.length = 0;
+    updateChatDisplay();
+  }
+
+  function downloadConversation() {
+    const text = conversationLog.map(msg => `${msg.role}: ${msg.content}`).join("\n\n");
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "cl5ar-checkin.txt";
+    link.click();
+  }
+</script>
+
 
 
 </body>
