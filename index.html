@@ -71,6 +71,11 @@
   <div class="container">
     <div class="options-menu">&#8942;</div>
     <div class="chat-box">
+      <div class="input-section">
+  <textarea id="userMessage" rows="3" placeholder="Write your check-in here..." style="width: 100%; padding: 0.5rem;"></textarea>
+  <button onclick="submitMessage()" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">Send</button>
+</div>
+      
       <p><strong>AI:</strong> Hi, I'm here to support your clarity today. Want to check in?</p>
     </div>
 
@@ -103,29 +108,45 @@
     <p>&copy; 2025 CL5AR Initiative</p>
   </footer>
 
-  <script>
-    async function sendCheckInMessage(message) {
-      const response = await fetch("https://1c6e183e-4f48-4860-be37-3d639cd8b460-00-6gazeugf5dpv.janeway.replit.dev/checkin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message })
-      });
+<script>
+  async function sendCheckInMessage(message) {
+    const response = await fetch("https://1c6e183e-4f48-4860-be37-3d639cd8b460-00-6gazeugf5dpv.janeway.replit.dev/checkin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
 
-      const data = await response.json();
-      if (data.response) {
-        const chatBox = document.querySelector(".chat-box");
-        const reply = document.createElement("p");
-        reply.innerHTML = `<strong>AI:</strong> ${data.response}`;
-        chatBox.appendChild(reply);
-      }
+    const data = await response.json();
+    const chatBox = document.querySelector(".chat-box");
+
+    if (data.response) {
+      const reply = document.createElement("p");
+      reply.innerHTML = `<strong>AI:</strong> ${data.response}`;
+      chatBox.appendChild(reply);
+      chatBox.scrollTop = chatBox.scrollHeight; // auto-scroll
+    } else {
+      const error = document.createElement("p");
+      error.innerHTML = `<strong>AI:</strong> Hmm... something went wrong.`;
+      chatBox.appendChild(error);
     }
+  }
 
-    window.onload = () => {
-      sendCheckInMessage("I'm checking in about alcohol. I'm feeling uncertain.");
-    };
-  </script>
+  function submitMessage() {
+    const input = document.getElementById("userMessage");
+    const message = input.value.trim();
+    if (message) {
+      const chatBox = document.querySelector(".chat-box");
+      const userMsg = document.createElement("p");
+      userMsg.innerHTML = `<strong>You:</strong> ${message}`;
+      chatBox.appendChild(userMsg);
+      sendCheckInMessage(message);
+      input.value = ""; // Clear input
+    }
+  }
+</script>
+
 
 </body>
 </html>
