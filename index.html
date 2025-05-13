@@ -1,0 +1,107 @@
+<!-- CL5AR: Substance Use Support Interface (Wireframe HTML) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CL5AR - Console Check-In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .chat-box {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 1rem;
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      background: #fafafa;
+    }
+    .dropdown {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 2rem;
+    }
+    .options-menu {
+      text-align: right;
+      font-size: 1.5rem;
+    }
+    .links {
+      margin-top: 1rem;
+    }
+    .links a {
+      margin-right: 1rem;
+      color: #007BFF;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CL5AR</h1>
+    <p>This space is private, judgment-free, and built to help you.</p>
+  </header>
+
+  <div class="container">
+    <div class="options-menu">&#8942;</div>
+    <div class="chat-box">
+      <p><strong>AI:</strong> Hi, I'm here to support your clarity today. Want to check in?</p>
+    </div>
+
+    <select class="dropdown">
+      <option selected disabled>Select substance or behavior</option>
+      <option>Alcohol</option>
+      <option>Opiates</option>
+      <option>Stimulants</option>
+      <option>Cannabis</option>
+      <option>Other</option>
+    </select>
+
+    <select class="dropdown">
+      <option selected disabled>How are you feeling right now?</option>
+      <option>Calm</option>
+      <option>Anxious</option>
+      <option>Triggered</option>
+      <option>Depressed</option>
+      <option>Empowered</option>
+    </select>
+
+    <textarea class="dropdown" rows="4" placeholder="Anything you'd like to add?"></textarea>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">References</a>
+    </div>
+    <p>&copy; 2025 CL5AR Initiative</p>
+  </footer>
+</body>
+</html>
