@@ -103,5 +103,30 @@
     </div>
     <p>&copy; 2025 CL5AR Initiative</p>
   </footer>
+  <script>
+  async function sendCheckInMessage(message) {
+    const response = await fetch("https://1c6e183e-4f48-4860-be37-3d639cd8b460-00-6gazeugf5dpv.janeway.replit.dev/checkin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    if (data.response) {
+      const chatBox = document.querySelector(".chat-box");
+      const reply = document.createElement("p");
+      reply.innerHTML = `<strong>AI:</strong> ${data.response}`;
+      chatBox.appendChild(reply);
+    }
+  }
+
+  // Auto-trigger for demo
+  window.onload = () => {
+    sendCheckInMessage("I’m checking in about alcohol. I’m feeling uncertain.");
+  };
+</script>
+
 </body>
 </html>
